@@ -1,0 +1,37 @@
+defaultEntryPoints = ["http", "https"]
+
+[entryPoints]
+[entryPoints.dashboard]
+address = ":8080"
+[entryPoints.dashboard.auth]
+[entryPoints.dashboard.auth.basic]
+users = ["admin:$apr1$wXMWCJuq$zmnt06hhU4rBa3Ajn/qtj0"]
+
+[entryPoints.http]
+address = ":80"
+
+[entryPoints.http.redirect]
+entryPoint = "https"
+
+[entryPoints.https]
+address = ":443"
+
+[entryPoints.https.tls]
+
+[api]
+entrypoint="dashboard"
+
+[acme]
+email = "jose.moreno3@utp.ac.pa"
+storage = "acme.json"
+caServer = "https://acme-v02.api.letsencrypt.org/directory"
+entryPoint = "https"
+onHostRule = true
+
+[acme. httpChallenge]
+entryPoint = "http"
+
+[docker]
+domain = "monitor.utponline.xyz"
+watch = true
+network = "web"

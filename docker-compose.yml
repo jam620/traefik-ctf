@@ -1,0 +1,176 @@
+version: "3"
+
+networks:
+    web:
+      external: true
+
+    internal:
+      external: false
+
+services:
+
+    traefik:
+      image: traefik:1.7.12
+      restart: always
+      ports:
+        - 80:80
+        - 443:443
+      networks:
+        - web
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - $PWD/traefik.toml:/traefik.toml
+        - $PWD/acme.json:/acme.json
+      container_name: traefik
+#      environment:
+#        - VULTR_API_KEY={YOUR VULTR API KEY}
+      labels:
+        - "traefik.enable=true"
+        - "traefik.backend=dashboard"
+        - "traefik.frontend.rule=Host:monitor.utponline.xyz"
+        - "traefik.port=8080"
+      networks:
+        - web
+
+
+    owasp:
+      image: bkimminich/juice-shop:v8.7.2
+      environment:
+        NODE_ENV:
+      labels:
+        - traefik.backend=owasp
+        - traefik.frontend.rule=Host:juice1.utponline.xyz
+        - traefik.docker.network=web
+        - traefik.port=3000
+      networks:
+        - web
+
+    owasp2:
+      image: bkimminich/juice-shop:v8.7.2
+      environment:
+        NODE_ENV:
+      labels:
+        - traefik.backend=owasp2
+        - traefik.frontend.rule=Host:juice2.utponline.xyz
+        - traefik.docker.network=web
+        - traefik.port=3000
+
+      networks:
+        - web
+
+    owasp3:
+      image: bkimminich/juice-shop
+      environment:
+        NODE_ENV:
+      labels:
+        - traefik.backend=owasp3
+        - traefik.frontend.rule=Host:juice3.utponline.xyz
+        - traefik.docker.network=web
+        - traefik.port=3000
+
+      networks:
+        - web
+
+    owasp4:
+      image: bkimminich/juice-shop
+      environment:
+        NODE_ENV:
+      labels:
+        - traefik.backend=owasp4
+        - traefik.frontend.rule=Host:juice4.utponline.xyz
+        - traefik.docker.network=web
+        - traefik.port=3000
+
+      networks:
+        - web
+
+    owasp5:
+      image: bkimminich/juice-shop
+      environment:
+        NODE_ENV:
+      labels:
+        - traefik.backend=owasp5
+        - traefik.frontend.rule=Host:juice5.utponline.xyz
+        - traefik.docker.network=web
+        - traefik.port=3000
+
+      networks:
+        - web
+
+    owasp6:
+      image: bkimminich/juice-shop
+      environment:
+        NODE_ENV:
+      labels:
+        - traefik.backend=owasp6
+        - traefik.frontend.rule=Host:juice6.utponline.xyz
+        - traefik.docker.network=web
+        - traefik.port=3000
+
+      networks:
+        - web
+
+    owasp7:
+      image: bkimminich/juice-shop
+      environment:
+        NODE_ENV:
+      labels:
+        - traefik.backend=owasp7
+        - traefik.frontend.rule=Host:juice7.utponline.xyz
+        - traefik.docker.network=web
+        - traefik.port=3000
+
+      networks:
+        - web
+
+    owasp8:
+      image: bkimminich/juice-shop
+      environment:
+        NODE_ENV:
+      labels:
+        - traefik.backend=owasp8
+        - traefik.frontend.rule=Host:juice8.utponline.xyz
+        - traefik.docker.network=web
+        - traefik.port=3000
+
+      networks:
+        - web
+
+    owasp9:
+      image: bkimminich/juice-shop
+      environment:
+        NODE_ENV:
+      labels:
+        - traefik.backend=owasp9
+        - traefik.frontend.rule=Host:juice9.utponline.xyz
+        - traefik.docker.network=web
+        - traefik.port=3000
+
+      networks:
+        - web
+
+    owasp10:
+      image: bkimminich/juice-shop
+      environment:
+        NODE_ENV:
+      labels:
+        - traefik.backend=owasp10
+        - traefik.frontend.rule=Host:juice10.utponline.xyz
+        - traefik.docker.network=web
+        - traefik.port=3000
+
+      networks:
+        - web
+
+    ctfd:
+      image: ctfd/ctfd
+      environment:
+        NODE_ENV:
+      labels:
+        - traefik.backend=ctfd
+        - traefik.frontend.rule=Host:ctfd.utponline.xyz
+        - traefik.docker.network=web
+        - traefik.port=8000
+
+      networks:
+        - web
